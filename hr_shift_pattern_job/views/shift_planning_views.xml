@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="shift_planning_cycle_line_search" model="ir.ui.view">
+        <field name="model">hr.shift.planning.line</field>
+        <field
+            name="inherit_id"
+            ref="hr_shift_pattern.shift_planning_cycle_line_search"
+        />
+        <field name="arch" type="xml">
+            <field name="template_id" position="after">
+                <field name="job_id" />
+            </field>
+            <filter name="group_employee" position="after">
+                <filter
+                    name="group_job"
+                    string="Job"
+                    context="{'group_by': 'job_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+    <record id="shift_planning_cycle_line_tree" model="ir.ui.view">
+        <field name="model">hr.shift.planning.line</field>
+        <field
+            name="inherit_id"
+            ref="hr_shift_pattern.shift_planning_cycle_line_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="template_id" position="after">
+                <field name="job_id" readonly="1" optional="show" />
+            </field>
+        </field>
+    </record>
+    <record id="shift_planning_cycle_line_kanban" model="ir.ui.view">
+        <field name="model">hr.shift.planning.line</field>
+        <field
+            name="inherit_id"
+            ref="hr_shift_pattern.shift_planning_cycle_line_kanban"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//kanban/field[@name='template_id']" position="after">
+                <field name="job_id" />
+            </xpath>
+            <xpath expr="//strong[@t-esc='record.employee_id.value']" position="after">
+                <small class="text-muted">
+                    <field name="job_id" />
+                </small>
+            </xpath>
+        </field>
+    </record>
+    <record id="shift_planning_line_calendar" model="ir.ui.view">
+        <field name="model">hr.shift.planning.line</field>
+        <field
+            name="inherit_id"
+            ref="hr_shift_pattern.shift_planning_line_calendar_all_shifts"
+        />
+        <field name="arch" type="xml">
+            <calendar position="attributes">
+                <attribute name="color">job_id</attribute>
+            </calendar>
+            <field name="employee_id" position="after">
+                <field name="job_id" filters="1" />
+            </field>
+        </field>
+    </record>
+</odoo>
